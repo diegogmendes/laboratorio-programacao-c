@@ -1,0 +1,72 @@
+include <stdio.h>
+#include <string.h>
+
+int main() {
+    char nome[50];
+    char matricula[20];
+    int i;
+    FILE *arquivo;
+
+    arquivo = fopen("funcionarios.txt", "w");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo.\n");
+        return 1;
+    }
+
+    for (i = 0; i < 5; i++) {
+        printf("\nFuncionario %d\n", i + 1);
+
+        printf("Nome: ");
+        fgets(nome, sizeof(nome), stdin);
+        nome[strcspn(nome, "\n")] = '\0';
+
+        printf("Matricula: ");
+        fgets(matricula, sizeof(matricula), stdin);
+        matricula[strcspn(matricula, "\n")] = '\0';
+
+        fprintf(arquivo, "Nome: %s | Matricula: %s\n", nome, matricula);
+    }
+
+    fclose(arquivo);
+
+    printf("\nDados gravados com sucesso em funcionarios.txt!\n");
+
+    return 0;
+}
+Questão 2
+c
+#include <stdio.h>
+
+int main() {
+    int numero, i;
+    FILE *arquivo;
+
+    arquivo = fopen("numeros.txt", "w");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo.\n");
+        return 1;
+    }
+
+    for (i = 0; i < 5; i++) {
+        printf("Digite o numero %d: ", i + 1);
+        scanf("%d", &numero);
+        fprintf(arquivo, "%d\n", numero);
+    }
+
+    fclose(arquivo);
+
+    arquivo = fopen("numeros.txt", "r");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo para leitura.\n");
+        return 1;
+    }
+
+    printf("\nNumeros armazenados no arquivo:\n");
+    while (fscanf(arquivo, "%d", &numero) == 1) {
+        printf("%d\n", numero);
+    }
+
+    fclose(arquivo);
+
+    return 0;
+}
